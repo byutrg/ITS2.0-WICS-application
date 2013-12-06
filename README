@@ -1,0 +1,99 @@
+NAME
+    ITS::WICS - WICS file format converter
+
+VERSION
+    version 0.04
+
+SYNOPSIS
+        use ITS::WICS qw(xml2html);
+        my $html = xml2html('path/to/file.xml');
+        print $$html;
+
+DESCRIPTION
+    WICS stands for Work In Context System. As a project, it is meant to
+    make Internationalization Tag Set (ITS) metadata contained in a document
+    more accessible to end-users via extraction and visualization.
+
+    This module provides access to the four WICS conversion tasks (see the
+    "EXPORTS" section). Two standalone applications, a GUI and a CLI, are
+    also provided in this distribution (see WICS-GUI.pl and WICS.pl).
+
+    See "HTML 5 - ITS 2.0 IMPLEMENTATION PROJECT: WORK IN CONTEXT SYSTEM
+    (WICS).pdf" in the project GitHub repository
+    <https://github.com/renatb/ITS2.0-WICS-converter> for details.
+
+EXPORTS
+    The following subroutines may be exported:
+
+  "xml2html"
+    Converts input XML data into HTML5 while keeping the ITS information
+    intact. See "ITS::WICS::XML2HTML" for more details.
+
+    Argument is either a string containing an XML file name, a string
+    pointer containing actual XML data, or a filehandle for a file
+    containing the data.
+
+    Return value is the newly created HTML ITS::DOM object.
+
+  "xliff2html"
+    Converts input XLIFF data into HTML5 while keeping the ITS information
+    for "source" and "target" elements intact.
+
+    The first argument is either a string containing an XLIFF file name, a
+    string pointer containing actual XLIFF data, or a filehandle for a file
+    containing the data. The second argument is a boolean indicating whether
+    informative labels should be added (for empty or duplicate targets).
+
+    Return value is the newly created HTML ITS::DOM object.
+
+  "xml2xliff"
+    Extracts translation units and ITS information from input XML data and
+    creates an XLIFF file. This function uses "sec" elements to create
+    "group"s, and "para" elements to make "trans-unit"s. Keep in mind that
+    this functionality is still highly immature.
+
+    The first argument is either a string containing an XML file name, a
+    string pointer containing actual XML data, or a filehandle for a file
+    containing the data.
+
+    Return value is the newly created XLIFF ITS::DOM object.
+
+  "reduceHtml"
+    Consolidates ITS-decorated HTML5 by placing all external rules in the
+    head element.
+
+    The input and return values are the same as for "xml2HTML", except that
+    the input should refer to HTML5 data instead of XML.
+
+SEE ALSO
+    This module relies on the ITS module for processing ITS markup and
+    rules.
+
+    The modules for the various ITS data conversion are included in this
+    distribution:
+
+    ITS::WICS::XML2HTML
+    ITS::WICS::XLIFF2HTML
+    ITS::WICS::XML2XLIFF
+    ITS::WICS::Reduce
+    ITS::DOM
+
+    The ITS 2.0 specification for XML and HTML5:
+    <http://www.w3.org/TR/its20/>.
+
+    The spec for representing ITS in XLIFF:
+    <http://www.w3.org/International/its/wiki/XLIFF_1.2_Mapping>.
+
+    ITS interest group mail archives:
+    <http://lists.w3.org/Archives/Public/public-i18n-its-ig/>
+
+AUTHOR
+    Nathan Glenn <garfieldnate@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is Copyright (c) 2013 by DFKI.
+
+    This is free software, licensed under:
+
+      The MIT (X11) License
+
