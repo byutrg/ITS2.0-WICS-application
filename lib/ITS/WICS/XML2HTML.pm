@@ -84,7 +84,8 @@ sub new {
 =head2 C<convert>
 
 Converts the document contained in the input L<ITS> object into an HTML
-document with equivalent ITS information.
+document with equivalent ITS information. Returns the newly created
+ITS::DOM object.
 
 =cut
 
@@ -129,8 +130,8 @@ sub convert {
 	# paste FutureNodes and create new rules to match them
 	$self->_update_rules($head);
 
-	# return string pointer
-	return \($html_doc->string);
+	# return HTML document
+	return $html_doc;
 }
 
 # returns true if the root of the given document is an its:rules element

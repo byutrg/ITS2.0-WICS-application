@@ -49,7 +49,7 @@ intact. See C<ITS::WICS::XML2HTML> for more details.
 Argument is either a string containing an XML file name, a string pointer
 containing actual XML data, or a filehandle for a file containing the data.
 
-Return value is a pointer to a string containing the output HTML5 text.
+Return value is the newly created HTML ITS::DOM object.
 
 =cut
 sub xml2html {
@@ -69,7 +69,7 @@ a string pointer containing actual XLIFF data, or a filehandle for a
 file containing the data. The second argument is a boolean indicating whether
 informative labels should be added (for empty or duplicate targets).
 
-Return value is a pointer to a string containing the output HTML5 text.
+Return value is the newly created HTML ITS::DOM object.
 
 =cut
 sub xliff2html {
@@ -90,7 +90,7 @@ The first argument is either a string containing an XML file name,
 a string pointer containing actual XML data, or a filehandle for a
 file containing the data.
 
-Return value is a pointer to a string containing the output XLIFF text.
+Return value is the newly created XLIFF ITS::DOM object.
 
 =cut
 sub xml2xliff {
@@ -114,7 +114,7 @@ sub reduceHtml {
     my ($doc) = @_;
     my $ITS = ITS->new('html', doc => $doc);
     reduce($ITS);
-    return \($ITS->get_doc->string);
+    return $ITS->get_doc;
 }
 
 1;
@@ -135,6 +135,8 @@ distribution:
 =item L<ITS::WICS::XML2XLIFF>
 
 =item L<ITS::WICS::Reduce>
+
+=item L<ITS::DOM>
 
 =back
 

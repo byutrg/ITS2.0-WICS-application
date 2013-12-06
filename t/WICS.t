@@ -14,32 +14,32 @@ my $all = get_data_section;
 
 #convert each type of document and test the output
 my $html_path = path($Bin, qw(ITS-Reduce corpus test_param.html));
-my $html = reduceHtml($html_path);
+my $html = \(reduceHtml($html_path)->string);
 normalize($html);
 normalize(\$all->{reduceHtml_output});
 eq_or_diff_html($$html, $all->{reduceHtml_output}, 'htmlReduce');
 
 my $xml = $all->{xml2html_input};
-$html = xml2html(\$xml);
+$html = \(xml2html(\$xml)->string);
 normalize($html);
 normalize(\$all->{xml2html_output});
 eq_or_diff_html($$html, $all->{xml2html_output}, 'xml2html');
 
 my $xliff = $all->{xliff2html_input};
-$html = xliff2html(\$xliff);
+$html = \(xliff2html(\$xliff)->string);
 normalize($html);
 normalize(\$all->{xliff2html_output});
 eq_or_diff_html($$html, $all->{xliff2html_output}, 'xliff2html');
 
 $xliff = $all->{'xliff2html-labels_input'};
-$html = xliff2html(\$xliff, 1);
+$html = \(xliff2html(\$xliff, 1)->string);
 normalize($html);
 normalize(\$all->{'xliff2html-labels_output'});
 eq_or_diff_html($$html,
     $all->{'xliff2html-labels_output'}, 'xliff2html with labels');
 
 $xml = $all->{xml2xliff_input};
-$xliff = xml2xliff(\$xml);
+$xliff = \(xml2xliff(\$xml)->string);
 normalize($xliff);
 normalize(\$all->{xml2xliff_output});
 is_xml($$xliff, $all->{xml2xliff_output}, 'xml2xliff');

@@ -18,7 +18,7 @@ sub htmlize {
     my ($self, $xml) = @_;
     my $converter = ITS::WICS::XLIFF2HTML->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert($ITS) };
+    my $converted = $converter->convert($ITS)->string;
     $converted = $self->normalize_html($converted);
     return $converted;
 }
@@ -29,7 +29,7 @@ sub htmlize_with_labels {
     my ($self, $xml) = @_;
     my $converter = ITS::WICS::XLIFF2HTML->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert($ITS, 1) };
+    my $converted = $converter->convert($ITS, 1)->string;
     $converted = $self->normalize_html($converted);
     return $converted;
 }
@@ -41,7 +41,7 @@ sub html_log {
 
     my $converter = ITS::WICS::XLIFF2HTML->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert($ITS) };
+    my $converted = $converter->convert($ITS)->string;
     $converted = $self->normalize_html($converted);
     # print $converted;
     return ($converted, _get_messages($log->msgs()) );
@@ -55,7 +55,7 @@ sub html_log_with_labels {
 
     my $converter = ITS::WICS::XLIFF2HTML->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert($ITS, 1) };
+    my $converted = $converter->convert($ITS, 1)->string;
     $converted = $self->normalize_html($converted);
     # print $converted;
     return ($converted, _get_messages($log->msgs()) );

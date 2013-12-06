@@ -14,7 +14,7 @@ filters {
 
 for my $block(blocks()){;
     my $xliff = $block->input;
-    print $xliff;
+    # print $xliff;
     is_xml($xliff, $block->output, $block->name);
 }
 

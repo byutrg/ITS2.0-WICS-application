@@ -78,7 +78,7 @@ sub new {
 Extracts strings from the input ITS object containing an XML document
 into an XLIFF document, preserving ITS information.
 
-Return value is a string pointer containing the output XLIFF string.
+Return value is the newly created ITS::DOM containing the XLIFF document.
 
 There are two segmentation schemes: the default behavior is to extract
 all strings in the document, using ITS C<withinText> values (currently
@@ -136,7 +136,8 @@ sub convert {
 
 	# extract $doc into an XLIFF document;
 	my ($xlf_doc) = $self->_xlfize($doc);
-	return \($xlf_doc->string);
+
+	return $xlf_doc;
 }
 
 # returns true if the root of the given document not an ITS element

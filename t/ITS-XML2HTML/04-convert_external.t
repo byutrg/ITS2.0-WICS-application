@@ -15,7 +15,7 @@ my $file = path($Bin, 'corpus', 'test_external_internal.xml');
 
 my $wics = ITS::WICS::XML2HTML->new();
 my $ITS = ITS->new('xml', doc => $file);
-my $converted = ${ $wics->convert($ITS) };
+my $converted = $wics->convert($ITS)->string;
 $converted = t::TestXML2HTML::Filter->normalize_html($converted);
 my $expected = t::TestXML2HTML::Filter->normalize_html($all_data->{html});
 

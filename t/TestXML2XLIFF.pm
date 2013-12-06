@@ -18,7 +18,7 @@ sub xlfize {
     my ($self, $xml) = @_;
     my $converter = ITS::WICS::XML2XLIFF->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert($ITS) };
+    my $converted = $converter->convert($ITS)->string;
     return $converted;
 }
 
@@ -35,8 +35,8 @@ sub xlfize_custom {
 
     my $converter = ITS::WICS::XML2XLIFF->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert(
-        $ITS, group => $group, tu => $tu) };
+    my $converted = $converter->convert(
+        $ITS, group => $group, tu => $tu)->string;
     return $converted;
 }
 
@@ -46,7 +46,7 @@ sub xlf_log {
     $log->clear();
     my $converter = ITS::WICS::XML2XLIFF->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert($ITS) };
+    my $converted = $converter->convert($ITS)->string;
     return ($converted, _get_messages($log->msgs()) );
 }
 

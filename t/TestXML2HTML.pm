@@ -18,7 +18,7 @@ sub htmlize {
     my ($self, $xml) = @_;
     my $converter = ITS::WICS::XML2HTML->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert($ITS) };
+    my $converted = $converter->convert($ITS)->string;
     $converted = $self->normalize_html($converted);
     # print $converted;
     return $converted;
@@ -30,7 +30,7 @@ sub html_log {
     $log->clear();
     my $converter = ITS::WICS::XML2HTML->new();
     my $ITS = ITS->new('xml', doc => \$xml);
-    my $converted = ${ $converter->convert($ITS) };
+    my $converted = $converter->convert($ITS)->string;
     $converted = $self->normalize_html($converted);
     # print $converted;
     return ($converted, _get_messages($log->msgs()) );

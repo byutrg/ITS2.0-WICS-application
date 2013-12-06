@@ -85,7 +85,7 @@ sub convert {
     # convert the XML and print it into the new directory
     my $html_fh = path($html_dir, $sub_dir, $html_file)->openw_utf8;
     my $ITS = ITS->new('xml', doc => $File::Find::name);
-    print $html_fh ${$converter->convert($ITS)};
+    print $html_fh $converter->convert($ITS)->string;
 
     my $log_fh = path($html_dir, $sub_dir, $log_file)->openw_utf8;
     print $log_fh "$_->{message}\n"

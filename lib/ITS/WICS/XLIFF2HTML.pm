@@ -106,7 +106,7 @@ exact copies of their C<source> element and also have the same ITS markup
 into the C<target>, and this label might help the user remember to translate
 it).
 
-Th return value is a string pointer containing the output HTML string.
+The return value is the created HTML ITS::DOM output.
 
 =cut
 sub convert {
@@ -163,8 +163,8 @@ sub convert {
 	$self->_update_rules($head);
 	$self->_set_visibility($head);
 
-	# return string pointer
-	return \($html_doc->string);
+	# return HTML document
+	return $html_doc;
 }
 
 # returns true if the root of the given document is an its:rules element

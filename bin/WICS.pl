@@ -135,10 +135,10 @@ for my $path (@files){
     $path = path($path);
     print "\n----------\n$path\n----------\n";
     try{
-        my $html = $processor->( $path );
+        my $html = $processor->( $path )->string;
         my $new_path = _get_new_path($path, $overwrite, $output_ext);
         my $out_fh = $new_path->openw_utf8;
-        print $out_fh ${ $html };
+        print $out_fh $html;
         print "wrote $new_path\n";
     }catch{
         print STDERR $_;
