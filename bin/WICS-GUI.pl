@@ -16,6 +16,16 @@ Choose the file or files you would like to convert by clicking
 "Convert". A frame with the log messages will pop up. Errors
 are shown in red.
 
+Optionally you may click the checkbox marked "output to WICS project"
+(tasks with HTML output only). If this is checked, you will be prompted
+for a project directory when you click the "Convert" button. The HTML
+output will be linked to ITS viewing code which will be stored in the
+selected directory. You may either choose an existing project directory
+or an empty directory for a new project to be created.
+
+Note that the ITS metadata viewer currently only supports localization
+note, terminology, and within-text categories.
+
 Converted files are written to the same directory as the source file.
 Filenames are created by stripping the extension from the input file
 and replacing it with the extension for the target format (html, xliff,

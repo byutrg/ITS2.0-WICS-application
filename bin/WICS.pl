@@ -70,6 +70,9 @@ which will be stored in the project directory.
 You may choose either an existing project directory or you may choose
 to create a new one.
 
+Note that the ITS metadata viewer currently only supports localization
+note, terminology, and within-text categories.
+
 =back
 
 =head1 STANDALONE EXECUTABLE

@@ -95,7 +95,9 @@ Upon double-clicking  the task that you wish to perform, you are given another w
 
 Click on C<Choose file...> to choose one or more files that you would like to process with the chosen task. If you have chosen C<XML2HTML>, for example, then you should choose one or more ITS-decorated XML files that you would like to convert to HTML for viewing in your web browser.
 
-After you have chosen the files you would like to process, they are listed in the white box. Upon clicking C<Convert> to process the listed files, another window containing the application logs appears:
+After you have chosen the files you would like to process, they are listed in the white box. You may also wish to check the C<output to WICS project> checkbox, which is available for tasks with HTML output. Checking this will create (or use an existing) project directory containing code to enable viewing ITS in web browsers. The output HTML files will be linked to this code.
+
+Upon clicking C<Convert> to process the listed files, you will be prompted for a project directory if you chose to use one. Another window containing the application logs will then appear:
 
 =begin html
 
@@ -126,6 +128,22 @@ The input file you provided should not be processed by the given converter. For 
 
 The C<copy> button at the top of the window copies all of the log contents from the window onto your clipboard so that you can paste it into another application such as a text editor or email client.
 
+If you output HTML to a project directory, you can open the output file in a browser to begin viewing ITS metadata like this:
+
+=begin html
+
+<center>
+    <img
+        src="WICS-Browser.png"
+        alt="snapshot of viewing ITS in web browser"
+        title="ITS viewer" />
+</center>
+
+=end html
+
+Note that the ITS metadata viewer currently only supports localization
+note, terminology, and within-text categories.
+
 =head3 WICS
 
 This application runs from the command line. The usage is C<< WICS [-w] --[task] -i <file> >>. The options are described below:
@@ -145,6 +163,18 @@ This argument is required. It provides the path to the input file to convert. Th
 This option specifies that the script may overwrite existing files when printing the conversion results. Filenames are created by stripping the extension from the input file and replacing it with the extension for the target format (html, xliff, etc.). If overwriting existing files is not permitted, additional numbers (-1, -2, etc.) will be appended to the filename to ensure uniqueness.
 
 This script will never write over the input file.
+
+=item -p | project
+
+For tasks that produce HTML output, you may choose to write the file
+into a WICS project folder. The HTML will be linked to ITS viewing code
+which will be stored in the project directory.
+
+You may choose either an existing project directory or you may choose
+to create a new one.
+
+Note that the ITS metadata viewer currently only supports localization
+note, terminology, and within-text categories.
 
 =back
 

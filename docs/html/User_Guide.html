@@ -176,8 +176,14 @@ then you should choose one or more ITS-decorated XML files that you would like t
 
 <p>After you have chosen the files you would like to process,
 they are listed in the white box.
-Upon clicking <code>Convert</code> to process the listed files,
-another window containing the application logs appears:</p>
+You may also wish to check the <code>output to WICS project</code> checkbox,
+which is available for tasks with HTML output.
+Checking this will create (or use an existing) project directory containing code to enable viewing ITS in web browsers.
+The output HTML files will be linked to this code.</p>
+
+<p>Upon clicking <code>Convert</code> to process the listed files,
+you will be prompted for a project directory if you chose to use one.
+Another window containing the application logs will then appear:</p>
 
 <center>
     <img
@@ -210,6 +216,21 @@ You should instead process the file that references it.</li>
 </ol>
 
 <p>The <code>copy</code> button at the top of the window copies all of the log contents from the window onto your clipboard so that you can paste it into another application such as a text editor or email client.</p>
+
+<p>If you output HTML to a project directory,
+you can open the output file in a browser to begin viewing ITS metadata like this:</p>
+
+<center>
+    <img
+        src="WICS-Browser.png"
+        alt="snapshot of viewing ITS in web browser"
+        title="ITS viewer" />
+</center>
+
+
+<p>Note that the ITS metadata viewer currently only supports localization note,
+terminology,
+and within-text categories.</p>
 
 <h3><a class='u' href='#___top' title='click to go to top of document'
 name="WICS"
@@ -252,6 +273,20 @@ additional numbers (-1,
 etc.) will be appended to the filename to ensure uniqueness.</p>
 
 <p>This script will never write over the input file.</p>
+
+<dt><a name="-p_|_project"
+>-p | project</a></dt>
+
+<dd>
+<p>For tasks that produce HTML output,
+you may choose to write the file into a WICS project folder.
+The HTML will be linked to ITS viewing code which will be stored in the project directory.</p>
+
+<p>You may choose either an existing project directory or you may choose to create a new one.</p>
+
+<p>Note that the ITS metadata viewer currently only supports localization note,
+terminology,
+and within-text categories.</p>
 </dd>
 </dl>
 

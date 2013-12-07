@@ -145,6 +145,7 @@ my @files = qw(
     WICS-GUI.png
     WICS-GUI-choose-file.png
     WICS-GUI-logs.png
+    WICS-browser.png
 );
 
 for my $file (@files){

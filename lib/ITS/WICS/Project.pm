@@ -1,3 +1,4 @@
+package ITS::WICS::Project;
 use strict;
 use warnings;
 use Carp;

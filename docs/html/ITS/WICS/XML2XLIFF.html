@@ -103,7 +103,7 @@ name="convert"
 
 <p>Extracts strings from the input ITS object containing an XML document into an XLIFF document, preserving ITS information.</p>
 
-<p>Return value is a string pointer containing the output XLIFF string.</p>
+<p>Return value is the newly created ITS::DOM containing the XLIFF document.</p>
 
 <p>There are two segmentation schemes: the default behavior is to extract all strings in the document, using ITS <code>withinText</code> values (currently only implemented with local markup) to decide which elements are inline or structural.</p>
 

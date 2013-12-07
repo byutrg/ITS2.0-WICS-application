@@ -53,7 +53,7 @@ name="DESCRIPTION"
 name="USAGE"
 >USAGE</a></h1>
 
-<pre>  WICS.pl [-w] --[task] -[i|input] &#60;file&#62;</pre>
+<pre>  WICS.pl [-w] --[task] -[i|input] &#60;file&#62; -[p|project]</pre>
 
 <h1><a class='u' href='#___top' title='click to go to top of document'
 name="REQUIRED_ARGUMENTS"
@@ -86,6 +86,16 @@ name="OPTIONS"
 <p>Specifies that the script may overwrite existing files when creating converted output. Filenames are created by stripping the extension from the input file and replacing it with the extension for the target format (html, xliff, etc.). If overwriting existing files is not permitted, additional numbers (-1, -2, etc.) will be appended to the filename to ensure uniqueness.</p>
 
 <p>This script will never write over the input file.</p>
+
+<dt><a name="-p_|_project"
+>-p | project</a></dt>
+
+<dd>
+<p>For tasks that produce HTML output, you may choose to write the file into a WICS project folder. The HTML will be linked to ITS viewing code which will be stored in the project directory.</p>
+
+<p>You may choose either an existing project directory or you may choose to create a new one.</p>
+
+<p>Note that the ITS metadata viewer currently only supports localization note, terminology, and within-text categories.</p>
 </dd>
 </dl>
 
