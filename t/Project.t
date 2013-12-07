@@ -1,14 +1,17 @@
+# Test ITS::WICS::Project.pm
+# TODO: test exceptions
 use strict;
 use warnings;
 use FindBin '$Bin';
 use Path::Tiny;
 use Test::More;
-plan tests => 11;
-use ITS::WICS::Project qw(update_project code_links);
+plan tests => 15;
+use ITS::WICS::Project qw(update_project code_links link_doc);
 
 test_new_project();
 test_update_project();
 test_code_links();
+test_link_doc();
 
 # create a new project and verify its contents
 sub test_new_project {
@@ -68,8 +71,8 @@ sub test_code_links {
     subtest 'jQuery link' => sub {
         plan tests => 4;
         is($jq_link->name, 'script', 'is a <script> element');
-        is($jq_link->att('href'),
-            '.WICS/script/jquery-1.9.1.min.js', 'correct href');
+        is($jq_link->att('src'),
+            '.WICS/scripts/jquery-1.9.1.min.js', 'correct src');
         is($jq_link->att('type'),
             'text/javascript', 'correct type');
         is($jq_link->namespace_URI, $html_ns,
@@ -78,11 +81,26 @@ sub test_code_links {
     subtest 'wics JS link' => sub {
         plan tests => 4;
         is($wics_link->name, 'script', 'is a <script> element');
-        is($wics_link->att('href'),
-            '.WICS/script/wics.js', 'correct href');
+        is($wics_link->att('src'),
+            '.WICS/scripts/wics.js', 'correct src');
         is($wics_link->att('type'),
             'text/javascript', 'correct type');
         is($wics_link->namespace_URI, $html_ns,
             'in HTML namespace');
     };
+}
+
+sub test_link_doc {
+    my $html_doc = ITS::DOM->new(
+        html => \'<!DOCTYPE html><html>');
+    link_doc($html_doc);
+    my $head = ( $html_doc->get_root->children )[0];
+    my @children = $head->children;
+    is(scalar $head->children, 3, 'three elements added to head');
+    is($children[0]->att('href'), '.WICS/css/wics_stylesheet.css',
+        'head contains css link');
+    is($children[1]->att('src'), '.WICS/scripts/jquery-1.9.1.min.js',
+        'head contains wics jQuery link');
+    is($children[2]->att('src'), '.WICS/scripts/wics.js',
+        'head contains wics.js link');
 }

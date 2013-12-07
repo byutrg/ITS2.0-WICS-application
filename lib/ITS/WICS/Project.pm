@@ -3,7 +3,9 @@ use warnings;
 use Carp;
 use Path::Tiny;
 use File::ShareDir 'dist_dir';
+use ITS::DOM;
 use ITS::DOM::Element 'new_element';
+use Carp;
 # VERSION
 # ABSTRACT: Manage WICS project folder
 
@@ -70,6 +72,28 @@ sub update_project {
     }
 }
 
+=head2 C<link_doc>
+
+Given an input HTML ITS::DOM object, add the required header elements
+to link the document with the WICS viewer code located in a project.
+Assumes that the HTML document will be located in a project folder.
+
+=cut
+sub link_doc {
+    my ($html_doc) = @_;
+    if($html_doc->get_type ne 'html'){
+        croak 'input document should be HTML';
+    }
+    # head should be the first child in an HTML document;
+    my $head = ( $html_doc->get_root->children )[0];
+    if($head->name ne 'head'){
+        croak 'Could not find <head> in HTML document!';
+    }
+    my @links = code_links();
+    $_->paste($head, 'last_child') for @links;
+    return;
+}
+
 =head2 C<code_links>
 
 Returns a list of elements that must be placed in a project
@@ -89,13 +113,13 @@ sub code_links {
     $css->set_namespace($html_ns);
 
     my $jq = new_element('script', {
-        href => '.WICS/script/jquery-1.9.1.min.js',
+        src => '.WICS/scripts/jquery-1.9.1.min.js',
         type => 'text/javascript'
     });
     $jq->set_namespace($html_ns);
 
     my $wics = new_element('script', {
-        href => '.WICS/script/wics.js',
+        src => '.WICS/scripts/wics.js',
         type => 'text/javascript'
     });
     $wics->set_namespace($html_ns);
