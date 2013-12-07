@@ -3,10 +3,14 @@ use strict;
 use warnings;
 use Carp;
 use Path::Tiny;
-use File::ShareDir 'dist_dir';
+#use this instead of File::ShareDir so we can make executables
+use File::ShareDir::PAR 'dist_dir';
 use ITS::DOM;
 use ITS::DOM::Element 'new_element';
 use Carp;
+use Exporter::Easy (
+    OK => [qw(link_doc update_project code_links)]
+);
 # VERSION
 # ABSTRACT: Manage WICS project folder
 
