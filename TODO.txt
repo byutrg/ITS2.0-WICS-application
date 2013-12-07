@@ -7,6 +7,7 @@
         * but then we would lose the utility of `git blame`!
     * test on platforms besides Windows 7
         * just release on CPAN and that's taken care of...
+    * refactor all occurrences of the HTML namespace and the ITS namespace into ITS::DOM
 
 ###ITS
 

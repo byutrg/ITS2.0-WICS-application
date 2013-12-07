@@ -3,6 +3,7 @@ use warnings;
 use Carp;
 use Path::Tiny;
 use File::ShareDir 'dist_dir';
+use ITS::DOM::Element 'new_element';
 # VERSION
 # ABSTRACT: Manage WICS project folder
 
@@ -67,6 +68,38 @@ sub update_project {
         }
         $file->copy($destination);
     }
+}
+
+=head2 C<code_links>
+
+Returns a list of elements that must be placed in a project
+document <head> element in order to link to the WICS viewer
+and enable ITS viewing in a browser.
+
+=cut
+sub code_links {
+    # create new elements everytime so that it won't matter if
+    # they are edited or moved
+    my $html_ns = 'http://www.w3.org/1999/xhtml';
+    my $css = new_element('link', {
+        href => '.WICS/css/wics_stylesheet.css',
+        rel => 'stylesheet',
+        type => 'text/css'
+    });
+    $css->set_namespace($html_ns);
+
+    my $jq = new_element('script', {
+        href => '.WICS/script/jquery-1.9.1.min.js',
+        type => 'text/javascript'
+    });
+    $jq->set_namespace($html_ns);
+
+    my $wics = new_element('script', {
+        href => '.WICS/script/wics.js',
+        type => 'text/javascript'
+    });
+    $wics->set_namespace($html_ns);
+    return ($css, $jq, $wics);
 }
 
 # return true if the given path contains WICS viewer code newer than

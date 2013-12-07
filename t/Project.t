@@ -3,11 +3,12 @@ use warnings;
 use FindBin '$Bin';
 use Path::Tiny;
 use Test::More;
-plan tests => 8;
-use ITS::WICS::Project 'update_project';
+plan tests => 11;
+use ITS::WICS::Project qw(update_project code_links);
 
 test_new_project();
 test_update_project();
+test_code_links();
 
 # create a new project and verify its contents
 sub test_new_project {
@@ -47,4 +48,41 @@ sub test_update_project {
     ok(-M path($dir, '.WICS', 'colors.txt') > 0,
         'colors.txt added to new project');
     return;
+}
+
+sub test_code_links {
+    my ($css_link, $jq_link, $wics_link) = code_links();
+    my $html_ns = 'http://www.w3.org/1999/xhtml';
+    subtest 'CSS link' => sub {
+        plan tests => 5;
+        is($css_link->name, 'link', 'is a <link> element');
+        is($css_link->att('href'),
+            '.WICS/css/wics_stylesheet.css', 'correct href');
+        is($css_link->att('rel'),
+            'stylesheet', 'correct rel');
+        is($css_link->att('type'),
+            'text/css', 'correct type');
+        is($css_link->namespace_URI, $html_ns,
+            'in HTML namespace');
+    };
+    subtest 'jQuery link' => sub {
+        plan tests => 4;
+        is($jq_link->name, 'script', 'is a <script> element');
+        is($jq_link->att('href'),
+            '.WICS/script/jquery-1.9.1.min.js', 'correct href');
+        is($jq_link->att('type'),
+            'text/javascript', 'correct type');
+        is($jq_link->namespace_URI, $html_ns,
+            'in HTML namespace');
+    };
+    subtest 'wics JS link' => sub {
+        plan tests => 4;
+        is($wics_link->name, 'script', 'is a <script> element');
+        is($wics_link->att('href'),
+            '.WICS/script/wics.js', 'correct href');
+        is($wics_link->att('type'),
+            'text/javascript', 'correct type');
+        is($wics_link->namespace_URI, $html_ns,
+            'in HTML namespace');
+    };
 }
