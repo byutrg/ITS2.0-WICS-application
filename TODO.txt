@@ -62,3 +62,4 @@ The test which validates the conversion of the files in the ITS 2.0 test suite s
 * Real icons instead of colored boxes would be less cheesy.
 * It would be useful to be able to add and remove files from a list for conversion, instead of just selecting all of the files for processing at once.
 * Somewhere along the way, someone might look for a help button in WICS-GUI and they will find nothing.
+* better error message for invalid input HTML file (currently says something about response not being 200 ok)

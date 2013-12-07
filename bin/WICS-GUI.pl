@@ -111,11 +111,12 @@ use Wx qw(
     :window
     :id
     :filedialog
+    :dirdialog
     :colour
     :listbox
 );
 use Wx::DND;
-use Wx::Event qw(EVT_BUTTON EVT_LISTBOX EVT_LISTBOX_DCLICK);
+use Wx::Event qw(EVT_BUTTON EVT_LISTBOX EVT_LISTBOX_DCLICK EVT_CHECKBOX);
 use base 'Wx::App';
 use Path::Tiny;
 use Try::Tiny;
@@ -124,6 +125,7 @@ use Log::Any::Adapter;
 use ITS::WICS::GuiLogger;
 Log::Any::Adapter->set('+ITS::WICS::GuiLogger');
 use ITS::WICS;
+use ITS::WICS::Project qw(link_doc update_project);
 
 sub OnInit {
     my( $self ) = @_;
@@ -191,11 +193,6 @@ sub OnListBoxDoubleClick {
 
     my $files = [];
     my $convert_btn     = Wx::Button->new($panel, wxID_OK, 'Convert');
-    EVT_BUTTON( $panel, $convert_btn, sub {
-            my ($panel, $event) = @_;
-            _convert_files($panel, $transformer, $files, $output_ext);
-        }
-    );
     my $choose_file_btn     = Wx::Button->new($panel, wxID_ANY, 'Choose File...');
     EVT_BUTTON( $panel, $choose_file_btn, sub {
             my ($panel, $event) = @_;
@@ -234,6 +231,28 @@ sub OnListBoxDoubleClick {
         wxALIGN_CENTER # no border and centre horizontally
     );
 
+    #you cannot use a project with XML2XLIFF; only HTML output tasks.
+    my $use_project = 0;
+    if($title ne 'XML2XLIFF'){
+        my $project_provider = Wx::CheckBox->new(
+            $panel, wxID_ANY, "output to WICS project" );
+        EVT_CHECKBOX( $panel, $project_provider,
+            sub {
+                my ($panel, $event) = @_;
+                $use_project = $event->IsChecked;
+            }
+        );
+        my $sizer = Wx::BoxSizer->new( wxHORIZONTAL );
+        $sizer->Add( $project_provider, 0, wxALL, 5 );
+        $topsizer->Add($sizer, 0, wxALL, 5);
+    }
+    EVT_BUTTON( $panel, $convert_btn, sub {
+            my ($panel, $event) = @_;
+            _convert_files($panel, $transformer, $files,
+                $output_ext, $use_project);
+        }
+    );
+
     # my $overwrite_checkbox = Wx::CheckBox->new(
     #     $frame, wxID_ANY, "overwrite existing files",
     #     wxDefaultPosition, wxDefaultSize, 0);
@@ -254,6 +273,17 @@ sub OnListBoxDoubleClick {
     return;
 }
 
+
+sub OnProjectProvider {
+    my( $this, $event ) = @_;
+
+    if ($event->IsChecked) {
+        print "on!";
+    } else {
+        print "off!";
+    }
+}
+
 #returns an array pointer of paths to user-specified files to open
 sub _open_files {
     my ($parent) = @_;
@@ -272,8 +302,30 @@ sub _open_files {
     return [];
 }
 
+sub _open_project_dir {
+    my ($parent) = @_;
+    my $dirDialog = Wx::DirDialog->new($parent,
+        'Choose project directory', '', wxDD_DEFAULT_STYLE);
+
+    my $dirDialogStatus = $dirDialog->ShowModal();
+
+    my $path = $dirDialog->GetPath();
+    if ( $dirDialogStatus == wxID_OK ) {
+        return $path;
+    };
+    return;
+}
+
 sub _convert_files {
-    my ($parent, $transformer, $files_array, $output_ext) = @_;
+    my ($parent, $transformer, $files_array,
+        $output_ext, $use_project) = @_;
+
+    my $project;
+    if($use_project){
+        $project = _open_project_dir($parent);
+        update_project($project);
+    }
+
     my $frame = Wx::Frame->new(
         $parent,# parent window
         -1,                 # ID -1 means any
@@ -355,10 +407,18 @@ sub _convert_files {
             $text->SetDefaultStyle($normal_style);
             $text->AppendText(
                 "\n----------\n$path\n----------\n");
-            my $result = $transformer->($path)->string;
-            my $new_path = _get_new_path($path, $output_ext);
+            my $result = $transformer->($path);
+            my $new_path;
+            if($project){
+                $new_path = _get_new_path(
+                    path($project, $path->basename),
+                    $output_ext);
+                link_doc($result);
+            }else{
+                $new_path = _get_new_path($path, $output_ext);
+            }
             my $fh = $new_path->openw_utf8;
-            print $fh $result;
+            print $fh $result->string;
             $text->SetDefaultStyle($done_style);
             $text->AppendText("\nwrote $new_path\n");
         }catch{

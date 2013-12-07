@@ -9,6 +9,7 @@ binmode(STDERR, ":encoding(UTF-8)");
 use Path::Tiny;
 use Try::Tiny;
 use ITS::WICS qw(xml2html xliff2html reduceHtml xml2xliff);
+use ITS::WICS::Project qw(link_doc update_project);
 use Getopt::Lucid qw( :all );
 # PODNAME: WICS.pl
 # VERSION
@@ -20,7 +21,7 @@ This is a command-line application for altering ITS-decorated data.
 
 =head1 USAGE
 
-  WICS.pl [-w] --[task] -[i|input] <file>
+  WICS.pl [-w] --[task] -[i|input] <file> -[p|project]
 
 =head1 REQUIRED ARGUMENTS
 
@@ -60,6 +61,15 @@ ensure uniqueness.
 
 This script will never write over the input file.
 
+=item -p | project
+
+For tasks that produce HTML output, you may choose to write the file
+into a WICS project folder. The HTML will be linked to ITS viewing code
+which will be stored in the project directory.
+
+You may choose either an existing project directory or you may choose
+to create a new one.
+
 =back
 
 =head1 STANDALONE EXECUTABLE
@@ -86,6 +96,7 @@ my @specs = (
     Switch('xml2xliff')->anycase,
     Switch('reduceHtml')->anycase,
     Switch('overwrite|w')->anycase,
+    Param('project|p')->anycase,
     List('input|i')->anycase,
 );
 my $opt;
@@ -97,6 +108,9 @@ try {
         die 'must provide either --xml2html, --xml2xliff, ' .
             '--xliff2html or --reducehHtml';
     }
+    if($opt->get_xml2xliff && $opt->get_project){
+        die 'must choose task with HTML output to use a WICS project';
+    }
 }catch{
     my $msg = "\nWICS ITS document processor\n";
     $msg .= "$_\n";
@@ -107,6 +121,7 @@ try {
     $msg .= "  --reduceHtml: reduce ITS-decorated HTML5 to single file\n";
     $msg .= "  -w or --overwrite: overwrite existing files during conversion\n";
     $msg .= "  -i or --input: convert given XML file\n";
+    $msg .= "  -p or --project: output to WICS project folder (HTML output only)\n";
     die $msg;
 };
 
@@ -125,7 +140,18 @@ if($opt->get_xml2html){
     $processor = sub { xml2xliff($_[0]) };
     $output_ext = 'xlf';
 }
-#TODO: XML2XLIFF
+
+# manage the input project, if there is one
+my $project_dir;
+try {
+    $project_dir = path($opt->get_project);
+}catch{
+    die "Bad project path: '$opt->get_project'"
+};
+$project_dir->mkpath;
+$project_dir->exists or
+    die "Could not create project directory $project_dir";
+update_project($project_dir);
 
 my @files = $opt->get_input;
 my $overwrite = $opt->get_overwrite;
@@ -135,10 +161,18 @@ for my $path (@files){
     $path = path($path);
     print "\n----------\n$path\n----------\n";
     try{
-        my $result = $processor->( $path )->string;
-        my $new_path = _get_new_path($path, $overwrite, $output_ext);
+        my $result = $processor->( $path );
+        my $new_path;
+        if($opt->get_project){
+            $new_path = _get_new_path(
+                path($project_dir, $path->basename),
+                $overwrite, $output_ext);
+            link_doc($result);
+        }else{
+            $new_path = _get_new_path($path, $overwrite, $output_ext);
+        }
         my $out_fh = $new_path->openw_utf8;
-        print $out_fh $result;
+        print $out_fh $result->string;
         print "wrote $new_path\n";
     }catch{
         print STDERR $_;
