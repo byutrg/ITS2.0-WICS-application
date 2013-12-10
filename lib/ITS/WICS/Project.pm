@@ -59,6 +59,7 @@ sub update_project {
         }
         $file->copy($destination);
     }
+    return;
 }
 
 sub link_doc {
