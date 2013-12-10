@@ -122,6 +122,16 @@ t/TestXLIFF2HTML.pm
 t/TestXML2HTML.pm
 t/TestXML2XLIFF.pm
 t/WICS.t
+t/corpus/project/.WICS/VERSION
+t/corpus/project/.WICS/colors.txt
+t/corpus/project/.WICS/css/wics_stylesheet.css
+t/corpus/project/.WICS/img/nested-close.png
+t/corpus/project/.WICS/img/nested-open.png
+t/corpus/project/.WICS/img/no.png
+t/corpus/project/.WICS/img/yes-close.png
+t/corpus/project/.WICS/img/yes-open.png
+t/corpus/project/.WICS/scripts/jquery-1_9_1_min.js
+t/corpus/project/.WICS/scripts/wics.js
 t/perlcriticrc
 xt/author/critic.t
 xt/release/cpan-changes.t
