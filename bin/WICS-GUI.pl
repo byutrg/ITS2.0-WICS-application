@@ -292,6 +292,7 @@ sub OnProjectProvider {
     } else {
         print "off!";
     }
+    return;
 }
 
 #returns an array pointer of paths to user-specified files to open
