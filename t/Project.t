@@ -21,7 +21,7 @@ sub test_new_project {
     ok(path($temp, '.WICS', 'css', 'wics_stylesheet.css')->exists,
         'CSS stylesheet added to new project');
 
-    ok(path($temp, '.WICS', 'scripts', 'jquery-1.9.1.min.js')->exists,
+    ok(path($temp, '.WICS', 'scripts', 'jquery-1_9_1_min.js')->exists,
         'JQuery added to new project');
 
     ok(path($temp, '.WICS', 'scripts', 'wics.js')->exists,
@@ -42,7 +42,7 @@ sub test_update_project {
     ok(-M path($dir, '.WICS', 'css', 'wics_stylesheet.css') > 0,
         'CSS stylesheet added to new project');
 
-    ok(-M path($dir, '.WICS', 'scripts', 'jquery-1.9.1.min.js') > 0,
+    ok(-M path($dir, '.WICS', 'scripts', 'jquery-1_9_1_min.js') > 0,
         'JQuery added to new project');
 
     ok(-M path($dir, '.WICS', 'scripts', 'wics.js') > 0,
@@ -72,7 +72,7 @@ sub test_code_links {
         plan tests => 4;
         is($jq_link->name, 'script', 'is a <script> element');
         is($jq_link->att('src'),
-            '.WICS/scripts/jquery-1.9.1.min.js', 'correct src');
+            '.WICS/scripts/jquery-1_9_1_min.js', 'correct src');
         is($jq_link->att('type'),
             'text/javascript', 'correct type');
         is($jq_link->namespace_URI, $html_ns,
@@ -99,7 +99,7 @@ sub test_link_doc {
     is(scalar $head->children, 3, 'three elements added to head');
     is($children[0]->att('href'), '.WICS/css/wics_stylesheet.css',
         'head contains css link');
-    is($children[1]->att('src'), '.WICS/scripts/jquery-1.9.1.min.js',
+    is($children[1]->att('src'), '.WICS/scripts/jquery-1_9_1_min.js',
         'head contains wics jQuery link');
     is($children[2]->att('src'), '.WICS/scripts/wics.js',
         'head contains wics.js link');

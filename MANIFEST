@@ -41,7 +41,7 @@ share/img/nested-open.png
 share/img/no.png
 share/img/yes-close.png
 share/img/yes-open.png
-share/scripts/jquery-1.9.1.min.js
+share/scripts/jquery-1_9_1_min.js
 share/scripts/wics.js
 t/00-compile.t
 t/000-report-versions-tiny.t

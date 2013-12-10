@@ -89,7 +89,7 @@ sub code_links {
     $css->set_namespace($html_ns);
 
     my $jq = new_element('script', {
-        src => '.WICS/scripts/jquery-1.9.1.min.js',
+        src => '.WICS/scripts/jquery-1_9_1_min.js',
         type => 'text/javascript'
     });
     $jq->set_namespace($html_ns);
