@@ -174,12 +174,17 @@ Contains scripts that aren't directly part of the WICS applications; these perfo
 
 =item C<lib>
 
-contains code for performing conversions and processing ITS.
+Contains code for performing conversions and processing ITS.
 
 =item C<bin>
 
 Contains two applications for performing the WICS tasks: a command line interface (C<WICS.pl>) and a graphical interface (C<WICS-GUI.pl>).
 
+=item C<share>
+
+Contains data that must be available to the Perl libraries at run time,
+in this case the browser code for viewing ITS metadata that needs to be
+copied into project sub-folders when generating HTML output.
 
 =item C<t>
 
