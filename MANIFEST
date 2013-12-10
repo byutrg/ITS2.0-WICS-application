@@ -24,6 +24,7 @@ lib/ITS/WICS/FutureNode.pm
 lib/ITS/WICS/FutureNodeManager.pm
 lib/ITS/WICS/GuiLogger.pm
 lib/ITS/WICS/LogUtils.pm
+lib/ITS/WICS/Project.pm
 lib/ITS/WICS/Reduce.pm
 lib/ITS/WICS/XLIFF2HTML.pm
 lib/ITS/WICS/XML2HTML.pm
@@ -34,9 +35,14 @@ lib/ITS/WICS/XML2XLIFF/ITSSegmenter.pm
 lib/ITS/XMLRuleExtractor.pm
 share/VERSION
 share/colors.txt
-share/jquery-1.9.1.min.js
-share/wics.js
-share/wics_stylesheet.css
+share/css/wics_stylesheet.css
+share/img/nested-close.png
+share/img/nested-open.png
+share/img/no.png
+share/img/yes-close.png
+share/img/yes-open.png
+share/scripts/jquery-1.9.1.min.js
+share/scripts/wics.js
 t/00-compile.t
 t/000-report-versions-tiny.t
 t/01-FutureNode.t
@@ -111,6 +117,7 @@ t/ITS/corpus/XML/external_rules_XML3.xml
 t/ITS/corpus/XML/test_external.xml
 t/ITS/corpus/XML/test_external_internal.xml
 t/ITS/corpus/XML/test_param.xml
+t/Project.t
 t/TestXLIFF2HTML.pm
 t/TestXML2HTML.pm
 t/TestXML2XLIFF.pm

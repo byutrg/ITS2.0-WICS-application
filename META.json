@@ -45,6 +45,7 @@
             "Data::Dumper" : "0",
             "Encode" : "0",
             "Exporter::Easy" : "0",
+            "File::ShareDir::PAR" : "0",
             "Getopt::Lucid" : "0",
             "HTML::HTML5::Parser" : "0",
             "HTML::HTML5::Writer" : "0",
@@ -145,6 +146,10 @@
          "file" : "lib/ITS/WICS/LogUtils.pm",
          "version" : "0.04"
       },
+      "ITS::WICS::Project" : {
+         "file" : "lib/ITS/WICS/Project.pm",
+         "version" : "0.04"
+      },
       "ITS::WICS::Reduce" : {
          "file" : "lib/ITS/WICS/Reduce.pm",
          "version" : "0.04"
@@ -200,6 +205,7 @@
          "File::Find" : "1.20",
          "File::Path" : "2.08_01",
          "File::ShareDir::Install" : "0.04",
+         "File::ShareDir::PAR" : "0.06",
          "File::Slurp" : "9999.19",
          "File::Temp" : "0.2301",
          "FindBin" : "1.51",

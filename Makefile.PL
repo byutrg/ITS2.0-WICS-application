@@ -32,6 +32,7 @@ my %WriteMakefileArgs = (
     "Data::Dumper" => 0,
     "Encode" => 0,
     "Exporter::Easy" => 0,
+    "File::ShareDir::PAR" => 0,
     "Getopt::Lucid" => 0,
     "HTML::HTML5::Parser" => 0,
     "HTML::HTML5::Writer" => 0,

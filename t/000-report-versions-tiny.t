@@ -56,6 +56,7 @@ eval { $v .= pmver('Exporter::Easy','any version') };
 eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::Path','any version') };
 eval { $v .= pmver('File::ShareDir::Install','0.03') };
+eval { $v .= pmver('File::ShareDir::PAR','any version') };
 eval { $v .= pmver('File::Slurp','any version') };
 eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('FindBin','any version') };
