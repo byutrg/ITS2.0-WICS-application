@@ -62,7 +62,7 @@ sub extract_convert_custom {
         #if the current group has trans-units, assign an id and save it
         if(@{$state->{current_group}->child_els}){
             $state->{current_group}->set_att('id', ++$state->{group_num});
-            push $state->{groups}, $state->{current_group};
+            push @{ $state->{groups} }, $state->{current_group};
         }
     }
 
