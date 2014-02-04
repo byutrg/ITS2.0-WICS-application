@@ -79,7 +79,7 @@ sub log_match {
     if ($log->is_debug()){
         my $message = 'match: rule=' . node_log_id($rule->element);
         $message .= "; $_=" . node_log_id($match->{$_})
-            for keys $match;
+            for keys %$match;
         $log->debug($message);
     }
     return;
